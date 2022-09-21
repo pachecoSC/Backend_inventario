@@ -1,7 +1,7 @@
 module.exports = {
   remoteDB: process.env,
   api: {
-    port: process.env.PORT || 30000
+    port: process.env.PORT || 40000
   },
   mysql: {
     host: process.env.MYSQL_HOST || '127.0.0.1',

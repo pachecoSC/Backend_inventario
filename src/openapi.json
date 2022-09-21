@@ -1,0 +1,254 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "gestor inventario -  1.0",
+    "description": "backend para la gestion de inventario de productos industriales ",
+    "termsOfService": "",
+    "contact": {
+      "email": ""
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "https://github.com/pachecoSC"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:4000/api-gestor"
+    }
+  ],
+  "tags": [
+    {
+      "name": "suministros",
+      "description": "informacion sobre los suministros del inventario",
+      "externalDocs": {
+        "description": "leer mas sobre",
+        "url": "https://github.com/pachecoSC/GestorInventario"
+      }
+    }
+  ],
+  "paths": {
+    "/api-gestor/": {
+      "get": {
+        "tags": ["suministros"],
+        "summary": "Retorna listado de suministros",
+        "description": "Retorna listado de los suministros registrados en la base de datos",
+        "operationId": "getList",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Suministro"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Suministro"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se encontro datos"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/api-gestor/detalle-suministro/{Id}": {
+      "get": {
+        "tags": ["suministros"],
+        "summary": "Muestra un suministro por ID",
+        "description": "Muestra un suministro previamente filtrado por un id",
+        "operationId": "getDetalleById",
+        "parameters": [
+          {
+            "name": "detalleId",
+            "in": "path",
+            "description": "ID de suministro a encontrar",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Detalle"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/Detalle"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID invalido"
+          },
+          "404": {
+            "description": "Detalle no encontrado"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Detalle": {
+        "type": "object",
+        "properties": {
+          "codigo_inventario": {
+            "type": "string",
+            "example": "21920221255"
+          },
+          "id_equipo": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "id_empleado": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "fecha_inventario": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estado": {
+            "type": "string",
+            "example": "operativo",
+            "enum": ["operativo", "inoperativo"]
+          },
+          "cargo": {
+            "type": "string",
+            "example": "developer"
+          }
+        },
+        "xml": {
+          "name": "detalle"
+        }
+      },
+      "Suministro": {
+        "type": "object",
+        "properties": {
+          "codigo_inventario": {
+            "type": "string",
+            "example": "21920221255"
+          },
+          "id_equipo": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "id_empleado": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "fecha_inventario": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estado": {
+            "type": "string",
+            "example": "operativo",
+            "enum": ["operativo", "inoperativo"]
+          },
+          "cargo": {
+            "type": "string",
+            "example": "developer"
+          }
+        },
+        "xml": {
+          "name": "suministro"
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      }
+    },
+    "requestBodies": {
+      "Suministro": {
+        "description": "Object de Suministro que se debe agregar",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Suministro"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/Suministro"
+            }
+          }
+        }
+      },
+      "UserArray": {
+        "description": "objeto usuario ",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "petstore_auth": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
+            "scopes": {
+              "write:pets": "modify pets in your account",
+              "read:pets": "read your pets"
+            }
+          }
+        }
+      },
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "header"
+      }
+    }
+  }
+}
