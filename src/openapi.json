@@ -148,6 +148,7 @@
         }
       },
       "Suministro": {
+        "description": "suministro",
         "type": "object",
         "properties": {
           "codigo_inventario": {
@@ -178,6 +179,21 @@
             "example": "developer"
           }
         },
+        "xml": {
+          "name": "suministro"
+        }
+      },
+      "Listado": {
+        "description": "listado",
+        "type": "object",
+        "properties": [
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Suministro"
+            }
+          },{},{}
+        ],
         "xml": {
           "name": "suministro"
         }

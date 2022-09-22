@@ -1,21 +1,29 @@
-const express = require('express');
-const app = express();
+const express = require('express')
+const path = require('path')
+const cors = require('cors')
+//necesario para la documentacion
+const swaggerUi = require('swagger-ui-express')
+const swaggerDoc = require('./src/openapi.json')
 
-const port = 3000;
+// Intializations
+const app = express()
 
-app.get('/', (req, res) => {
-  res.send('Hola mi servidor')
-})
-app.get('/ruta', (req, res) => {
-  res.send('Hola mi primera ruta')
-})
-app.get('/products', (req, res) => {
-  res.json({
-    name: "producto 1",
-    price: 1000
-  });
-})
+// habilitar los cors
+app.use(cors())
 
-app.listen(port, () => {
-  console.log('Mi port'+ port)
+// Settings
+app.set('port', process.env.PORT || 4000)
+
+// Routes
+app.use(require('./src/api/index'))
+app.use('/api-gestor', require('./src/api/index'))
+// documentacion
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
+
+// Public
+app.use(express.static(path.join(__dirname, 'public')))
+
+// Starting
+app.listen(app.get('port'), () => {
+  console.log('Server is in port', app.get('port'))
 })
