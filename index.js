@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const cors = require('cors')
+const config = require('./config')
 //necesario para la documentacion
 const swaggerUi = require('swagger-ui-express')
 const swaggerDoc = require('./src/openapi.json')
@@ -10,9 +11,9 @@ const app = express()
 
 // habilitar los cors
 app.use(cors())
-
+console.log(config)
 // Settings
-app.set('port', process.env.PORT || 4000)
+app.set('port', config.port)
 
 // Routes
 app.use(require('./src/api/index'))

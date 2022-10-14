@@ -1,13 +1,15 @@
-module.exports = {
-  remoteDB: process.env,
-  api: {
-    port: process.env.PORT || 40000
-  },
-  mysql: {
-    host: process.env.MYSQL_HOST || '127.0.0.1',
-    port:process.env.MYSQL_PORT || '3306',
-    user: process.env.MYSQL_USER || 'root',
-    password: process.env.MYSQL_PASS || '',
-    database: process.env.MYSQL_DB || 'gestion_inventario'
-  },
+const config = require('dotenv')
+
+//declara si estamos en PRD o DEV
+const NODE_ENV  ='development'
+// const NODE_ENV  ='production'
+
+config.config({path:`.env.${NODE_ENV}`})
+
+module.exports= {
+  port: process.env.PORT || '',
+  host: process.env.MYSQL_HOST || '',
+  user: process.env.MYSQL_USER || '',
+  password: process.env.MYSQL_PASS || '',
+  database: process.env.MYSQL_DB || ''
 }

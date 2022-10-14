@@ -3,10 +3,10 @@ const { promisify } = require('util')
 const config = require('../../config')
 
 const dbconfig = {
-  host: config.mysql.host,
-  user: config.mysql.user,
-  password: config.mysql.password,
-  database: config.mysql.database
+  host: config.host,
+  user: config.user,
+  password: config.password,
+  database: config.database
 }
 
 // realizar la coneccion
